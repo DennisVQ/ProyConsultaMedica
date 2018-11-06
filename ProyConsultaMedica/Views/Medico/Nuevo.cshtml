@@ -1,0 +1,223 @@
+﻿@model ProyConsultaMedica.Models.Medico
+
+<!-- Script para el ViewBag Mensaje -->
+<script>
+    var mensaje = '@ViewBag.mensaje';
+    if (mensaje != ""){
+        alert(mensaje);
+    } 
+</script>
+
+@{
+    ViewBag.Title = "Nuevo";
+    Layout = "~/Views/Shared/_LayoutHeader.cshtml";
+}
+
+
+
+<body class="has-side-panel side-panel-right fullwidth-page side-push-panel">
+    <div class="body-overlay"></div>
+
+    <div id="wrapper" class="clearfix">
+        <!-- preloader -->
+        <div id="preloader">
+            <div id="spinner">
+                <img src="~/images/preloaders/1.gif" alt="">
+            </div>
+            <div id="disable-preloader" class="btn btn-default btn-sm">Disable Preloader</div>
+        </div>
+
+        <!-- Start main-content -->
+        <div class="main-content">
+            <!-- Section: home -->
+            <!--se quito fullscreen a class del section-->
+            <section id="home" class="divider parallax layer-overlay overlay-dark-9" data-bg-img="../images/bg/bg1.jpg">
+                <div class="display-table">
+                    <div class="display-table-cell">
+                        <!--se añadio pb-100 al container-->
+                        <div class="container pb-100">
+                            <div class="row">
+                                <div class="col-md-6 col-md-push-3">
+                                    <div class="text-center mb-60"><a href="#" class=""><img alt="" src="~/images/logo-wide-white.png"></a></div>
+                                    <!--<form name="reg-form" class="register-form form-transparent" method="post">-->
+                                    @using (Html.BeginForm("Nuevo", "Medico", FormMethod.Post, new { @class = "register-form form-transparent" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="icon-box mb-0 p-0">
+                                            <a href="#" class="icon icon-bordered icon-rounded icon-sm pull-left mb-0 mr-10">
+                                                <i class="pe-7s-users"></i>
+                                            </a>
+                                            <h4 class="text-theme-colored pt-10 mt-0 mb-30">Unete a nuestro Staff, Registrate Ahora !</h4>
+                                        </div>
+                                        <hr>
+                                        <p class="text-gray">A continuacion ingresa todos tus datos. Todos los campos son requeridos.</p>
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="form-group col-md-12">
+                                                @Html.EditorFor(model => model.nombres, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.nombres, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.apellidos, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="form-group col-md-12">
+                                                @Html.EditorFor(model => model.apellidos, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.apellidos, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.sexo)                                                
+                                                @Html.DropDownList("sexo", new List<SelectListItem>
+                                                {
+                                                   new SelectListItem{ Text="Escoge", Value = "" },
+                                                   new SelectListItem{ Text="Masculino", Value = "Masculino" },
+                                                   new SelectListItem{ Text="Femenino", Value = "Femenino" }
+                                                },
+                                                    htmlAttributes: new { @class = "form-control", @style = "background-color: #555" }
+                                                )
+                                                @*
+                                                @Html.EditorFor(model => model.sexo, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.sexo, "", new { @class = "text-danger" })
+                                                *@
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.fechaNacimiento)
+                                                <!--Se Agrego a Clase: required date-picker-->
+                                                @Html.EditorFor(model => model.fechaNacimiento, new { htmlAttributes = new { @class = "form-control"} })
+                                                @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.email)
+                                                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.telefono)
+                                                @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.dni)
+                                                @Html.EditorFor(model => model.dni, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.dni, "", new { @class = "text-danger" })
+
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.cmp)
+                                                @Html.EditorFor(model => model.cmp, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.cmp, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            @Html.LabelFor(model => model.presentacion, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="form-group col-md-12">
+                                                <!-- Nota: TextArea Multiples lineas / rows / Quita htmlAttributtes-->
+                                                @Html.TextAreaFor(model => model.presentacion, new { @class = "form-control", @rows = 4 })
+                                                @Html.ValidationMessageFor(model => model.presentacion, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.centro_estudios_univ)
+                                                @Html.EditorFor(model => model.centro_estudios_univ, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.centro_estudios_univ, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.especialidad)
+                                                @Html.DropDownList("especialidad", (SelectList) ViewBag.especialidades, 
+                                                    htmlAttributes: new { @class = "form-control", @style = "background-color: #555" })
+                                                @Html.ValidationMessageFor(model => model.especialidad, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.lugarLaboral)
+                                                @Html.EditorFor(model => model.lugarLaboral, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.lugarLaboral, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.pais)
+                                                @Html.DropDownList("pais", (SelectList) ViewBag.paises, 
+                                                    htmlAttributes: new { @class = "form-control", @style = "background-color: #555" })                                            
+                                                @Html.ValidationMessageFor(model => model.pais, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.usuario)
+                                                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.clave)
+                                                @Html.EditorFor(model => model.clave, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.clave, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <!--
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="form_choose_password">Choose Password</label>
+                                                <input id="form_choose_password" name="form_choose_password" class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Re-enter Password</label>
+                                                <input id="form_re_enter_password" name="form_re_enter_password" class="form-control" type="text">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label for="form_choose_username">Choose Username</label>
+                                                <input id="form_choose_username" name="form_choose_username" class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        -->
+
+                                        <div class="form-group">
+                                            <button class="btn btn-dark btn-lg btn-block mt-15" type="submit">Registrar</button>
+                                        </div>
+                                    <!--</form>-->
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- end main-content -->
+        <!-- Footer -->
+        <footer id="footer" class="footer bg-theme-colored">
+            <div class="container p-20">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <!--<p class="mb-0 text-white">Copyright &copy;2018. Todos los Derechos Reservados</p>-->
+                        <ul class="list-inline xs-text-center text-white mt-5">
+                            <li class="m-0 pl-10 pr-10"> <a href="#" class="text-white"><i class="fa fa-phone text-theme-colored"></i> +51 01 456-2675</a> </li>
+                            <li class="m-0 pl-10 pr-10">
+                                <a href="#" class="text-white"><i class="fa fa-envelope-o text-theme-colored"></i> contacto@consultamedica.com</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook text-white"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter text-white"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin text-white"></i></a></li>
+                            <li class="m-0 pl-10 pr-10"> <a href="#" class="text-white">Copyright &copy;2018. Todos los Derechos Reservados</a> </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    </div>
+    <!-- end wrapper -->
+

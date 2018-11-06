@@ -1,0 +1,123 @@
+﻿@model ProyConsultaMedica.Models.Medico
+
+<!-- Script para el ViewBag Mensaje -->
+<script>
+    var mensaje = '@ViewBag.mensaje';
+    if (mensaje != ""){
+        alert(mensaje);
+    }
+</script>
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutHeader.cshtml";
+}
+
+
+
+<body class="has-side-panel side-panel-right fullwidth-page side-push-panel">
+    <div class="body-overlay"></div>
+
+    <div id="wrapper" class="clearfix">
+        <!-- preloader -->
+        <div id="preloader">
+            <div id="spinner">
+                <img src="~/images/ preloaders/1.gif" alt="">
+            </div>
+            <div id="disable-preloader" class="btn btn-default btn-sm">Deshabilitar</div>
+        </div>
+
+        <!-- Start main-content -->
+        <div class="main-content">
+            <!-- Section: home -->
+            <section id="home" class="divider parallax fullscreen layer-overlay overlay-dark-9" data-bg-img="../images/bg/bg1.jpg">
+                <div class="display-table">
+                    <div class="display-table-cell">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-md-push-3">
+                                    <div class="text-center mb-60"><a href="#" class=""><img alt="" src="~/images/logo-wide-white.png"></a></div>
+                                    <h4 class="text-theme-colored mt-0 pt-5"> Login de Medicos Asociados</h4>
+                                    <p>Ingresa tus datos para el acceso al sistema de consultas. <p>
+                                    <p>Si lo que deseas es registrarte ingresa @Html.ActionLink("aqui", "Nuevo", "Medico", null, null) </p>
+
+                                    <!--<form name="login-form" class="form-transparent clearfix">-->
+                                    @using (Html.BeginForm("Login", "Medico", FormMethod.Post, new { @class = "form-transparent clearfix" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <!--
+                                                <label for="form_username_email">Nombre de Usuario</label>
+                                                <input id="form_username_email" name="form_username_email" class="form-control" type="text">
+                                                -->
+                                                @Html.LabelFor(model => model.usuario)
+                                                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <!--
+                                                <label for="form_password">Contraseña</label>
+                                                <input id="form_password" name="form_password" class="form-control" type="text">
+                                                -->
+                                                @Html.LabelFor(model => model.clave)
+                                                @Html.EditorFor(model => model.clave, new { htmlAttributes = new { @class = "form-control" } })
+
+                                            </div>
+                                        </div>
+                                        <div class="checkbox pull-left mt-15">
+                                            <label for="form_checkbox">
+                                                <input id="form_checkbox" name="form_checkbox" type="checkbox">
+                                                Recuerdame
+                                            </label>
+                                        </div>
+                                        <div class="form-group pull-right mt-10">
+                                            <button type="submit" class="btn btn-dark btn-sm">Ingresar</button>
+                                        </div>
+                                        <div class="clear text-center pt-10">
+                                            <a class="text-theme-colored font-weight-600 font-12" href="#">¿Olvidaste tu contraseña?</a>
+                                        </div>
+                                        <div class="clear text-center pt-10">
+                                            <a class="btn btn-dark btn-lg btn-block no-border mt-15 mb-15" href="#" data-bg-color="#3b5998">Login con Facebook</a>
+                                            <!--<a class="btn btn-dark btn-lg btn-block no-border" href="#" data-bg-color="#00acee">Registro de Nuevo Medico</a> -->
+                                            @Html.ActionLink("Registro para Nuevo Medico", "Nuevo", "Medico", null, new { @class = "btn btn-dark btn-lg btn-block no-border", @style = "background-color:#00acee;" })
+
+
+                                        </div>
+                                    }
+                                    <!--</form>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- end main-content -->
+        <!-- Footer -->
+        <footer id="footer" class="footer bg-theme-colored">
+            <div class="container p-20">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <!--<p class="mb-0 text-white">Copyright &copy;2018. Todos los Derechos Reservados</p>-->
+                        <ul class="list-inline xs-text-center text-white mt-5">
+                            <li class="m-0 pl-10 pr-10"> <a href="#" class="text-white"><i class="fa fa-phone text-theme-colored"></i> +51 01 456-2675</a> </li>
+                            <li class="m-0 pl-10 pr-10">
+                                <a href="#" class="text-white"><i class="fa fa-envelope-o text-theme-colored"></i> contacto@consultamedica.com</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook text-white"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter text-white"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin text-white"></i></a></li>
+                            <li class="m-0 pl-10 pr-10"> <a href="#" class="text-white">Copyright &copy;2018. Todos los Derechos Reservados</a> </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    </div>
+    <!-- end wrapper -->
+

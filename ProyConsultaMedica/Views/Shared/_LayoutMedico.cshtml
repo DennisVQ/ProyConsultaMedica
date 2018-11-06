@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <!-- Meta Tags -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="Medikal - Health & Medical HTML Template">
+    <meta name="keywords" content=" clinic, dental, doctor, health, hospital, medical, medical theme, medicine, therapy">
+    <meta name="author" content="ThemeMascot">
+
+    <!-- Page Title -->
+    <title>Proyecto - Consultas Medicas Online</title>
+
+    <!-- Favicon and Touch Icons -->
+    <link href="~/images/favicon.png" rel="shortcut icon" type="image/png">
+    <link href="~/images/apple-touch-icon.png" rel="icon">
+    <link href="~/images/apple-touch-icon-72x72.png" rel="icon" sizes="72x72">
+    <link href="~/images/apple-touch-icon-114x114.png" rel="icon" sizes="114x114">
+    <link href="~/images/apple-touch-icon-144x144.png" rel="icon" sizes="144x144">
+
+
+    @Styles.Render("~/Content/css_plantilla")
+
+    @Scripts.Render("~/bundles/js_plantilla_header")
+
+    @RenderSection("css", required: false)
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="has-side-panel side-panel-right fullwidth-page side-push-panel">
+    <div class="body-overlay"></div>
+    <div id="side-panel" class="dark" data-bg-img="../images/bg/bg8.jpg">
+        <div class="side-panel-wrap">
+            <div id="side-panel-trigger-close" class="side-panel-trigger"><a href="#"><i class="pe-7s-close font-36"></i></a></div>
+            <a href="javascript:void(0)"><img alt="logo" src="~/images/logo-wide.png"></a>
+            <div class="side-panel-nav mt-30">
+                <div class="widget no-border">
+                    <nav>
+                        <ul class="nav nav-list">
+
+
+                            <li>
+                                @* Poner en un var el Objecto Session de Medico*@
+                                @{ var varMedico = HttpContext.Current.Session["medicoLogueado"] as ProyConsultaMedica.Models.Medico; }
+
+                                @Html.ActionLink("Mi Perfil", "Perfil", "Medico", new { id = varMedico.id_medico }, null)
+                            </li>
+                            <li>
+                                <a class="tree-toggler nav-header">Consultas <i class="fa fa-angle-down"></i></a>
+                                <ul class="nav nav-list tree">
+                                    <li><a href="#">Pendientes</a></li>
+                                    <li><a href="#">Realizadas</a></li>
+                                    <li><a href="#">Por Calificacion</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Ayuda</a></li>
+                            <li><a href="#">Cerrar Sesion</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="side-panel-widget mt-30">
+                <div class="widget no-border">
+                    <ul>
+                        <li class="font-14 mb-5"> <i class="fa fa-phone text-theme-colored"></i> <a href="#" class="text-gray">511-456-789</a> </li>
+                        <li class="font-14 mb-5"> <i class="fa fa-clock-o text-theme-colored"></i> Lunes-Viernes 8:00 to 2:00 </li>
+                        <li class="font-14 mb-5"> <i class="fa fa-envelope-o text-theme-colored"></i> <a href="#" class="text-gray">contacto@consultasmedicas.com</a> </li>
+                    </ul>
+                </div>
+                <div class="widget">
+                    <ul class="styled-icons icon-dark icon-theme-colored icon-sm">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    </ul>
+                </div>
+                <p>Copyright &copy;2018</p>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" class="clearfix">
+        <!-- preloader -->
+        <div id="preloader">
+            <div id="spinner">
+                <img src="~/images/preloaders/1.gif" alt="">
+            </div>
+            <div id="disable-preloader" class="btn btn-default btn-sm">Disable Preloader</div>
+        </div>
+
+        <!-- Header -->
+        <header id="header" class="header">
+            <div class="header-top bg-theme-colored sm-text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="widget no-border m-0">
+                                <ul class="styled-icons icon-dark icon-theme-colored icon-sm sm-text-center">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="widget no-border m-0">
+                                <ul class="list-inline pull-right flip sm-pull-none sm-text-center mt-5">
+                                    <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-white"></i> <a class="text-white" href="#">511-456-789</a> </li>
+                                    <li class="text-white m-0 pl-10 pr-10"> <i class="fa fa-clock-o text-white"></i> Lunes-Viernes 8:00 to 2:00 </li>
+                                    <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-white"></i> <a class="text-white" href="#">contacto@serviciosmedicos.com</a> </li>
+                                    <li class="sm-display-block mt-sm-10 mb-sm-10">
+                                        <!-- Modal: Appointment Starts -->
+                                        <!--  <a class="bg-light p-5 text-theme-colored font-11" href="#">Salir de Panel Medico</a> -->
+                                        @Html.ActionLink("Salir de Panel Medico", "Index", "Home", null, new { @class = "bg-light p-5 text-theme-colored font-11" })
+
+
+                                        <!-- Modal: Appointment End -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-nav">
+                <div class="header-nav-wrapper navbar-scrolltofixed bg-lightest">
+                    <div class="container">
+                        <nav id="menuzord-right" class="menuzord blue bg-lightest">
+                            <a class="menuzord-brand pull-left flip" href="javascript:void(0)">
+                                <img src="~/images/logo-wide.png" alt="">
+                            </a>
+                            <div id="side-panel-trigger" class="side-panel-trigger"><a href="#"><i class="fa fa-bars font-24 text-gray"></i></a></div>
+                            <ul class="menuzord-menu onepage-nav">
+                                <li><a href="#">Login</a></li>
+                                <li><a href="#">Responder Consultas</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Start main-content -->
+        <div class="main-content">
+
+
+
+            @RenderBody()
+
+        </div>
+        <!-- end main-content -->
+
+
+
+        </div>
+        <!-- end main-content -->
+        <!-- Footer -->
+        <footer id="footer" class="footer pb-0" data-bg-img="../images/footer-bg.png" data-bg-color="#25272e">
+            <div class="container pt-90 pb-60">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="widget dark">
+                            <img alt="" src="~/images/logo-wide-white.png">
+                            <p class="font-12 mt-10 mb-10">Estamos compromentidos con el ofrecimiento de un servicio profesional, anonimo y gratuito para brindarselo a nuestra comunidad de habla hispana</p>
+                            <a class="btn btn-default btn-transparent btn-xs btn-flat mt-5" href="#">Leer Mas</a>
+                            <ul class="styled-icons icon-dark icon-theme-colored icon-circled icon-sm mt-20">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="widget dark">
+                            <h5 class="widget-title line-bottom-theme-colored-2">
+                                Ultimas Noticias
+                                <div class="latest-posts">
+                                    <article class="post media-post clearfix pb-0 mb-10">
+                                        <a class="post-thumb" href="#"><img src="https://placehold.it/80x55" alt=""></a>
+                                        <div class="post-right">
+                                            <h5 class="post-title mt-0 mb-5"><a href="#">Noticia 01</a></h5>
+                                            <p class="post-date mb-0 font-12">08 Oct 2018</p>
+                                        </div>
+                                    </article>
+                                    <article class="post media-post clearfix pb-0 mb-10">
+                                        <a class="post-thumb" href="#"><img src="https://placehold.it/80x55" alt=""></a>
+                                        <div class="post-right">
+                                            <h5 class="post-title mt-0 mb-5"><a href="#">Noticia 02</a></h5>
+                                            <p class="post-date mb-0 font-12">10 Sept 2018</p>
+                                        </div>
+                                    </article>
+                                    <article class="post media-post clearfix pb-0 mb-10">
+                                        <a class="post-thumb" href="#"><img src="https://placehold.it/80x55" alt=""></a>
+                                        <div class="post-right">
+                                            <h5 class="post-title mt-0 mb-5"><a href="#">Noticia 03</a></h5>
+                                            <p class="post-date mb-0 font-12">07 Ago 2018</p>
+                                        </div>
+                                    </article>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="widget dark">
+                            <h5 class="widget-title line-bottom-theme-colored-2">Rapido Contacto</h5>
+                            <form id="footer_quick_contact_form" name="footer_quick_contact_form" class="quick-contact-form" action="includes/quickcontact.php" method="post">
+                                <div class="form-group">
+                                    <input name="form_email" class="form-control" type="text" required="" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="form_message" class="form-control" required="" placeholder="Mensaje" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input name="form_botcheck" class="form-control" type="hidden" value="">
+                                    <button type="submit" class="btn btn-default btn-transparent btn-xs btn-flat mt-0" data-loading-text="Por favor espere...">Enviar</button>
+                                </div>
+                            </form>
+
+                            <!-- Quick Contact Form Validation-->
+                            <script type="text/javascript">
+              $("#footer_quick_contact_form").validate({
+                submitHandler: function(form) {
+                  var form_btn = $(form).find('button[type="submit"]');
+                  var form_result_div = '#form-result';
+                  $(form_result_div).remove();
+                  form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
+                  var form_btn_old_msg = form_btn.html();
+                  form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
+                  $(form).ajaxSubmit({
+                    dataType:  'json',
+                    success: function(data) {
+                      if( data.status == 'true' ) {
+                        $(form).find('.form-control').val('');
+                      }
+                      form_btn.prop('disabled', false).html(form_btn_old_msg);
+                      $(form_result_div).html(data.message).fadeIn('slow');
+                      setTimeout(function(){ $(form_result_div).fadeOut('slow') }, 6000);
+                    }
+                  });
+                }
+              });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="widget dark">
+                            <h5 class="widget-title line-bottom-theme-colored-2">Horario de Atencio Presencial</h5>
+                            <div class="opening-hours">
+                                <ul class="list list-border">
+                                    <li class="clearfix">
+                                        <span><i class="fa fa-clock-o mr-5"></i> Lunes - Martes :</span>
+                                        <div class="value pull-right"> 9.00 am - 10.00 pm </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="text-theme-color-2"><i class="fa fa-clock-o mr-5"></i> Miercoles - Jueves :</span>
+                                        <div class="value pull-right text-white"> 10.00 am - 8.00 pm </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span><i class="fa fa-clock-o mr-5"></i> Viernes - Sabado :</span>
+                                        <div class="value pull-right"> 9.00 am - 10.00 pm </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span><i class="fa fa-clock-o mr-5"></i> Domingo :</span>
+                                        <div class="value pull-right"> <span class="text-highlight bg-theme-colored text-white">Cerrado</span>  </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="horizontal-contact-widget mt-30 pt-30 text-center">
+                            <div class="col-sm-12 col-sm-4">
+                                <div class="each-widget">
+                                    <i class="pe-7s-phone font-36 mb-10"></i>
+                                    <h5 class="text-white">LLamanos</h5>
+                                    <p>Phone: <a href="#">+51 01 456-2675</a></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-sm-4 mt-sm-50">
+                                <div class="each-widget">
+                                    <i class="pe-7s-map font-36 mb-10"></i>
+                                    <h5 class="text-white">Direccion</h5>
+                                    <p>Av. Javier Prado 512, Lima-Peru</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-sm-4 mt-sm-50">
+                                <div class="each-widget">
+                                    <i class="pe-7s-mail font-36 mb-10"></i>
+                                    <h5 class="text-white">Email</h5>
+                                    <p><a href="#">contacto@consultasmedicas.com</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline styled-icons icon-hover-theme-colored icon-gray icon-circled text-center mt-30 mb-10">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a> </li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a> </li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a> </li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid bg-theme-colored p-20">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <p class="text-white font-11 m-0">Copyright &copy;2018 Todos los Derechos Reservados</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    </div>
+
+    <!-- end wrapper -->
+
+    <!-- Footer Scripts -->
+
+    @Scripts.Render("~/bundles/js_plantilla_footer")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
