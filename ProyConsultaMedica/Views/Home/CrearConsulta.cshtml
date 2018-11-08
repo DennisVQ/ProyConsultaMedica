@@ -1,5 +1,13 @@
 ﻿@model ProyConsultaMedica.Models.Consulta
 
+<!-- Script para el ViewBag Mensaje -->
+<script>
+    var mensaje = '@ViewBag.mensaje';
+    if (mensaje != ""){
+        alert(mensaje);
+    }
+</script>
+
 @{
     ViewBag.Title = "CrearConsulta";
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";

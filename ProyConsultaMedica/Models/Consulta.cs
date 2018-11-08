@@ -39,9 +39,9 @@ namespace ProyConsultaMedica.Models
         public string msje_respuesta { get; set; }
 
 
-        public System.DateTime fechaPregunta { get; set; }
+        public DateTime? fechaPregunta { get; set; }
 
-        public System.DateTime fechaRespuesta { get; set; }
+        public DateTime? fechaRespuesta { get; set; }
 
         [DisplayName("Calificacion")]
         [Required(ErrorMessage = "Requerido")]

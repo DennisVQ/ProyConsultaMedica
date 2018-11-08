@@ -916,6 +916,7 @@
     <Content Include="Views\Home\VerConsulta.cshtml" />
     <Content Include="Views\Home\VerCodigoGenerado.cshtml" />
     <Content Include="Views\Home\ListarConsultas.cshtml" />
+    <Content Include="Views\Home\PerfilMedico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

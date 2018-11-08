@@ -93,11 +93,19 @@
                             <a class="menuzord-brand pull-left flip xs-pull-center mt-20" href="index-mp-layout1.html">
                                 <img src="~/images/logo-wide.png" alt="">
                             </a>
-                            <ul class="menuzord-menu onepage-nav">
+                            <!-- <ul class="menuzord-menu onepage-nav"> -->
+                            <ul class="menuzord-menu">
                                 <li class="active"><a href="#">Inicio</a></li>
+                                <li>
+                                    @Html.ActionLink("Hacer Consulta Online", "CrearConsulta", "Home")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Buscar Consultas", "ListarConsultas", "Home")                                    
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Revisar Mi Consulta", "LoginConsulta", "Home")
+                                </li>
                                 <li><a href="#about">Acerca</a></li>
-                                <li><a href="#">Consulta Online</a></li>
-                                <li><a href="#">Busqueda de Consultas</a></li>
                                 <li><a href="#services">Servicios</a></li>
                                 <li><a href="#departments">Especialidades</a></li>
                                 <li><a href="#pricing">Precios</a></li>

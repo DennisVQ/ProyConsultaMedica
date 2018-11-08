@@ -53,7 +53,7 @@ GO
 
 CREATE TABLE TB_CONSULTA (
    id_consulta INT identity(1,1) PRIMARY KEY,   
-   codigo_generado VARCHAR(30) NOT NULL,   
+   codigo_generado VARCHAR(30) NOT NULL Unique,   
    correo varchar(30) NOT NULL,
    sexo VARCHAR(8) NOT NULL,
    edad int NOT NULL,
@@ -81,6 +81,10 @@ insert into tb_pais values ('Cuba');
 
 /*Al Dr. solo se va a valorar una Especialidad*/
 
+/*
+DROP PROCEDURE SP_InsertarConsulta;  
+GO  
+*/
 
 CREATE PROCEDURE SP_InsertarConsulta
 (
@@ -100,26 +104,39 @@ CREATE PROCEDURE SP_InsertarConsulta
 ) 
 as
 begin
- insert into TB_CONSULTA(codigo_generado, correo, sexo, edad, tipo_paciente, msje_pregunta, fechaPregunta, msje_respuesta,
+ insert into tb_consulta (codigo_generado, correo, sexo, edad, tipo_paciente, msje_pregunta, fechaPregunta, msje_respuesta,
  fechaRespuesta, calificacion, estado, id_especialidad, id_medico) 
  values (@codigo_generado, @correo, @sexo, @edad, @tipo_paciente, @msje_pregunta, @fechaPregunta, @msje_respuesta,
  @fechaRespuesta, @calificacion, @estado, @id_especialidad, @id_medico)
 end
 GO
 
+exec SP_InsertarConsulta 'Auto', 'abcd@hotmail.com', 'Masculino', 24,'Nose',  'asdasdsada sasdasdasvasasvdas','','','',0,1,1,1 ;
+GO
 
-CREATE PROCEDURE SP_ActualizarConsulta
+SELECT GETDATE()
+/*
+DROP PROCEDURE SP_ResponderConsulta;  
+GO  
+*/
+
+CREATE PROCEDURE SP_ResponderConsulta
 (
 @id_consulta INT,
 /*@msje_pregunta VARCHAR(500),*/
 /*@fechaPregunta DATETIME,*/
 @msje_respuesta VARCHAR(500),
 @fechaRespuesta DATETIME,  
-@calificacion INT,  
 @estado int
 ) 
 as
-update tb_consulta set @msje_respuesta = msje_respuesta, @fechaRespuesta = fechaRespuesta, 
-@calificacion = calificacion, @estado = estado
-where @id_consulta = id_consulta
+update tb_consulta set msje_respuesta = @msje_respuesta, fechaRespuesta = @fechaRespuesta , 
+estado = @estado where id_consulta = @id_consulta 
 GO
+
+/*
+DECLARE @dt datetime
+SELECT @dt = GETDATE()
+EXEC SP_ResponderConsulta 2,'Respondiendo por SQL', @dt, 2;
+GO
+*/ 

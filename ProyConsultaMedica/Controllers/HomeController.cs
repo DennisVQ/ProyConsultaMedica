@@ -15,6 +15,30 @@ namespace ProyConsultaMedica.Controllers
     {
         SqlConnection cn = new SqlConnection("server=.;database=BD_CONSULTA;uid=sa;pwd=sql");
 
+        IEnumerable<Pais> paises()
+        {
+            List<Pais> temporal = new List<Pais>();
+
+            SqlCommand cmd = new SqlCommand("Select * from tb_pais", cn);
+
+            cn.Open();
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read() == true)
+            {
+                Pais reg = new Pais();
+                reg.id_pais = dr.GetInt32(0);
+                reg.descripcion = dr.GetString(1);
+
+                temporal.Add(reg);
+            }
+
+            dr.Close(); cn.Close();
+
+            return temporal;
+        }
+
         IEnumerable<Especialidad> especialidades()
         {
             List<Especialidad> temporal = new List<Especialidad>();
@@ -103,7 +127,11 @@ namespace ProyConsultaMedica.Controllers
                 reg.msje_pregunta = dr.GetString(6);
                 reg.msje_respuesta = dr.GetString(7);
                 reg.fechaPregunta = dr.GetDateTime(8);
-                reg.fechaRespuesta = dr.GetDateTime(9);
+                
+                // Cuando un Datetime en reader es nulo
+                if (dr.IsDBNull(9)) { reg.fechaRespuesta = null; }
+                else { reg.fechaRespuesta = dr.GetDateTime(9); }
+
                 reg.calificacion = dr.GetInt32(10);
                 reg.estado = dr.GetInt32(11);
                 reg.especialidad = Convert.ToString(dr.GetInt32(12));
@@ -132,6 +160,7 @@ namespace ProyConsultaMedica.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult ListarConsultas(int? pagina = 0)
         {
             // Query
@@ -183,32 +212,32 @@ namespace ProyConsultaMedica.Controllers
             {
                 SqlCommand cmd = new SqlCommand("SP_InsertarConsulta", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@codigo_generado", "");
+
+                cmd.Parameters.AddWithValue("@codigo_generado", "Auto"); // Falta AutoGenerar Codigo
                 cmd.Parameters.AddWithValue("@correo", consulta.correo);
                 cmd.Parameters.AddWithValue("@sexo", consulta.sexo);
                 cmd.Parameters.AddWithValue("@edad", consulta.edad);
                 cmd.Parameters.AddWithValue("@tipo_paciente", consulta.tipo_paciente);
                 cmd.Parameters.AddWithValue("@msje_pregunta", consulta.msje_pregunta);
                 cmd.Parameters.AddWithValue("@fechaPregunta", DateTime.Now);
-                cmd.Parameters.AddWithValue("@msje_respuesta", null);
-                cmd.Parameters.AddWithValue("@fechaRespuesta", null);
+                cmd.Parameters.AddWithValue("@msje_respuesta", "");
+                cmd.Parameters.AddWithValue("@fechaRespuesta", DBNull.Value); // Null para Base de Datos
                 cmd.Parameters.AddWithValue("@calificacion", 0);
                 cmd.Parameters.AddWithValue("@estado", 1);
-                cmd.Parameters.AddWithValue("@id_especialidad", consulta.especialidad);
-                cmd.Parameters.AddWithValue("@id_medico", Convert.ToInt32("")); // Se escogera al azar
+                cmd.Parameters.AddWithValue("@id_especialidad", Convert.ToInt32(consulta.especialidad));
+                cmd.Parameters.AddWithValue("@id_medico", Convert.ToInt32("1")); // Falta Se escogera al azar
 
                 cmd.ExecuteNonQuery();
-                ViewBag.mensaje = "Registro Agregado";
+                ViewBag.mensaje = "Consulta Registrada";
             }
             catch (SqlException ex) { ViewBag.mensaje = ex.Message; }
             finally { cn.Close(); }
 
 
-            if (ViewBag.mensaje == "Registro Registrado")
+            if (ViewBag.mensaje == "Consulta Registrada")
             {
-                ViewBag.codigoGenerado = ""; // Falta Codigo
-
-                return RedirectToAction("VerCodigoGenerado");
+                
+                return RedirectToAction("VerCodigoGenerado", "Auto"); // Falta Mandar Codigo Autogenerado
             }
 
             ViewBag.especialidades = new SelectList(
@@ -219,8 +248,14 @@ namespace ProyConsultaMedica.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult VerCodigoGenerado()
+        public ActionResult VerCodigoGenerado(string codigoGenerado)
         {
+            if (codigoGenerado == null) {
+                return RedirectToAction("CrearConsulta");
+            }
+
+            ViewBag.codigoGenerado = codigoGenerado;
+
             return View();
         }
 
@@ -258,20 +293,21 @@ namespace ProyConsultaMedica.Controllers
                 return RedirectToAction("Index");
             }
 
+            //Falta validar que aun no ha sido respondida la consulta
+
             // Se cambio por Session en la Vista
             // ViewBag.estadoConsulta = consulta.estado;
 
             return View(consulta);
         }
 
+        // Aqui se puede calificar consulta
         [AllowAnonymous]
         [HttpPost]
         public ActionResult CalificarConsulta (Consulta consulta)
         {
             // Falta Determinar
-
             // Consulta consulta = (Consulta)Session["consultaLogueada"];
-
 
             if (consulta == null)
             {
@@ -307,7 +343,33 @@ namespace ProyConsultaMedica.Controllers
 
             return VerConsulta();
         }
-        
+
+
+        [AllowAnonymous]
+        public ActionResult PerfilMedico(int id)
+        {
+
+            Medico med = medicos().FirstOrDefault(x => x.id_medico == id) as Medico;
+
+            if (med == null)
+            {
+                return HttpNotFound();
+            }
+
+            var espe = especialidades().Where(x => x.id_especialidad == (Convert.ToInt32(med.especialidad))).FirstOrDefault();
+            var pais = paises().Where(x => x.id_pais == (Convert.ToInt32(med.pais))).FirstOrDefault();
+            med.especialidad = espe.descripcion;
+            med.pais = pais.descripcion;
+
+            return View(med);
+
+        }
+
+
+
+
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

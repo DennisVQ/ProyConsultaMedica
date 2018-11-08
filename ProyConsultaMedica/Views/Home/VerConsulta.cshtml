@@ -1,5 +1,13 @@
 ﻿@model ProyConsultaMedica.Models.Consulta
 
+<!-- Script para el ViewBag Mensaje -->
+<script>
+    var mensaje = '@ViewBag.mensaje';
+    if (mensaje != ""){
+        alert(mensaje);
+    }
+</script>
+
 @{
     ViewBag.Title = "VerConsulta";
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
@@ -103,7 +111,7 @@
         <dd>
             @Html.DisplayFor(model => model.medico) <br />
             @* Se genero el var arriba *@
-            @Html.ActionLink("Mi Perfil", "Perfil", "Medico", new { id = varConsulta.medico }, null)
+            @Html.ActionLink("Mi Perfil", "PerfilMedico", "Home", new { id = varConsulta.medico }, null)
 
         </dd>
 
@@ -111,7 +119,7 @@
 </div>
 
 
-@if(varConsulta.estado == 1){
+@if(varConsulta.estado == 2){
 
     using (Html.BeginForm("CalificarConsulta", "Home", FormMethod.Post))
     {
@@ -120,6 +128,10 @@
         <div class="form-horizontal">
             <h4>Calificar Respuesta</h4>
             <hr />
+
+            @Html.HiddenFor(model => model.id_consulta)
+
+
             <div class="form-group">
                 @Html.LabelFor(model => model.calificacion, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
