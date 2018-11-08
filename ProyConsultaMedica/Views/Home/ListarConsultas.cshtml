@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ProyConsultaMedica.Models.Consulta>
+
+@{
+    ViewBag.Title = "ListarConsultas";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>Listado de Consultas Respondidas</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.sexo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.edad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipo_paciente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.especialidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.msje_pregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaPregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.msje_respuesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaRespuesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.calificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.medico)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.sexo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.edad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipo_paciente)
+        </td>
+        <td>
+            @foreach (var esp in (List<ProyConsultaMedica.Models.Especialidad>)ViewBag.especialidad)
+            {
+                if (esp.id_especialidad == Convert.ToInt32(item.especialidad))
+                {
+                    @Html.Display(esp.descripcion)
+                }
+            }        
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.msje_pregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaPregunta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.msje_respuesta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaRespuesta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.calificacion)
+        </td>
+        <td>
+            @foreach (var med in (List<ProyConsultaMedica.Models.Medico>) ViewBag.medicos)
+            {
+                if(med.id_medico == Convert.ToInt32(item.medico)){
+                    @Html.Display("Dr. " + med.apellidos + " "+ med.nombres)
+                    @Html.ActionLink("Mi Perfil", "Perfil", "Medico", 
+                   new { id = med.id_medico }, null)
+
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+
+<!--agregando los botones, a traves del HTML ActionLink-->
+<div>
+    @for (int i = 0; i < (int)ViewBag.botones; i++)
+    {
+        @Html.ActionLink((i + 1).ToString(), "ListarConsultas",
+       new { pagina = i }, new { @class = "btn btn-primary" })
+    }
+</div>

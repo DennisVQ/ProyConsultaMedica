@@ -103,6 +103,43 @@ namespace ProyConsultaMedica.Controllers
             return temporal;
         }
 
+
+        IEnumerable<Consulta> consultas()
+        {
+            List<Consulta> temporal = new List<Consulta>();
+
+            SqlCommand cmd = new SqlCommand("Select * from tb_consulta", cn);
+
+            cn.Open();
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read() == true)
+            {
+                Consulta reg = new Consulta();
+                reg.id_consulta = dr.GetInt32(0);
+                reg.codigo_generado = dr.GetString(1);
+                reg.correo = dr.GetString(2);
+                reg.sexo = dr.GetString(3);
+                reg.edad= dr.GetInt32(4);
+                reg.tipo_paciente = dr.GetString(5);
+                reg.msje_pregunta = dr.GetString(6);
+                reg.msje_respuesta = dr.GetString(7);
+                reg.fechaPregunta = dr.GetDateTime(8);
+                reg.fechaRespuesta = dr.GetDateTime(9);
+                reg.calificacion = dr.GetInt32(10);
+                reg.estado = dr.GetInt32(11);
+                reg.especialidad = dr.GetString(12);
+                reg.medico = dr.GetString(13);
+                temporal.Add(reg);
+            }
+
+            dr.Close(); cn.Close();
+
+            return temporal;
+        }
+
+
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -174,16 +211,13 @@ namespace ProyConsultaMedica.Controllers
         [AllowAnonymous]
         public ActionResult Nuevo(Medico reg)
         {
-
-
-
+            
             ViewBag.mensaje = "";
             cn.Open();
 
             try
             {
-
-
+                
                 SqlCommand cmd = new SqlCommand(
                 "Insert tb_medico Values (@nombres, @apellidos, @sexo, @fechaNacimiento, @email, @telefono , @dni, " +
                 "@cmp, @presentacion, @centro_estudios_univ, @lugarLaboral, @usuario, @clave, @estado, @fechaRegistro, @especialidad, @pais)", cn
@@ -237,13 +271,121 @@ namespace ProyConsultaMedica.Controllers
 
 
         // GET: Medico
-        public ActionResult Index()
+        public ActionResult Index(int? pagina = 0)
         {
-            System.Diagnostics.Debug.WriteLine("INDEX  ID" + ((Medico) Session["medicoLogueado"]).id_medico);
-            System.Diagnostics.Debug.WriteLine("INDEX  USUARIO" + ((Medico)Session["medicoLogueado"]).usuario);
+            Medico medicoLog = (Medico) Session["medicoLogueado"];
 
-            return View();
+            // Query
+            var consultasPorMedico = consultas().Where(
+                x => x.medico == Convert.ToString(medicoLog.id_medico)).ToList();
+
+            //paginacion
+            ViewBag.pagina = pagina;
+            int n = consultasPorMedico.Count();
+            var numreg = 10;
+            ViewBag.botones = n % numreg == 0 ? n / numreg : n / numreg + 1;
+
+            int regini = (int) pagina * numreg;
+            int regfin = regini + numreg;
+
+            List<Consulta> temporal = new List<Consulta>();
+            for (int i = regini; i < regfin; i++)
+            {
+                if (i == n) break;
+
+                temporal.Add(consultasPorMedico[i]);
+            }
+
+            return View(temporal);
+
         }
+
+        public ActionResult DetalleConsulta (int id) {
+
+            Consulta cons = consultas().FirstOrDefault(x => x.id_consulta== id) as Consulta;
+
+
+            if (cons == null)
+            {
+                return HttpNotFound();
+            }
+
+            var espe = especialidades().Where(x => x.id_especialidad == (Convert.ToInt32(cons.especialidad))).FirstOrDefault();
+            var med = medicos().Where(x => x.id_medico== (Convert.ToInt32(cons.medico))).FirstOrDefault();
+            cons.especialidad = espe.descripcion;
+            cons.medico = "Dr. " + med.apellidos + ", " + med.nombres;
+            
+            return View(cons);
+        }
+
+        public ActionResult ResponderConsulta(int id)
+        {
+            
+            if (id == null)
+            {
+                // https://stackoverrun.com/es/q/8612373
+
+                // return RedirectToAction("Index");
+
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            Consulta cons = consultas().FirstOrDefault(x => x.id_consulta == id) as Consulta;
+
+            if (cons == null)
+            {
+                /* https://stackoverrun.com/es/q/8612373 */
+
+                // return RedirectToAction("Index");
+
+                return HttpNotFound();
+            }
+
+
+            var espe = especialidades().Where(x => x.id_especialidad == (Convert.ToInt32(cons.especialidad))).FirstOrDefault();
+            cons.especialidad = espe.descripcion;
+            
+            return View(cons);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult ResponderConsulta(Consulta consulta) {
+            ViewBag.mensaje = "";
+
+            cn.Open();
+
+
+            //recupero el registro original para actualizarlo
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SP_ActualizarConsulta", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@id_consulta", consulta.id_consulta);
+                cmd.Parameters.AddWithValue("@msje_respuesta", consulta.msje_respuesta);
+                cmd.Parameters.AddWithValue("@fechaRespuesta", DateTime.Now);
+                cmd.Parameters.AddWithValue("@calificacion", consulta.calificacion); // No Cambia
+                cmd.Parameters.AddWithValue("@estado", 2);
+
+                cmd.ExecuteNonQuery();
+                ViewBag.mensaje = "Consulta Respondida";
+                
+            }
+            catch (SqlException ex) { ViewBag.mensaje = ex.Message; }
+            finally { cn.Close(); }
+
+
+            if (ViewBag.mensaje == "Consulta Respondida")
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(consulta);
+
+        }
+
 
         public ActionResult Perfil(int id)
         {

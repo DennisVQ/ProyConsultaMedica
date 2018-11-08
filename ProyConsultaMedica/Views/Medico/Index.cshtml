@@ -1,21 +1,76 @@
-﻿
+﻿@model IEnumerable<ProyConsultaMedica.Models.Consulta>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMedico.cshtml";
 }
 
-<h2>Aqui va el listado de Preguntas para Medico</h2>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+<h2>Su Listado de Consultas</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.msje_pregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaPregunta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.msje_respuesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaRespuesta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.calificacion)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.msje_pregunta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaPregunta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.msje_respuesta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaRespuesta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.calificacion)
+            </td>
+            <td>
+                @Html.ActionLink("Detalle", "DetalleConsulta", new { id = item.id_consulta }) |
+
+                @* Valida que consulta falta responderse*@
+                @if (item.estado == 1)
+                {
+                    @Html.ActionLink("Responder", "ResponderConsulta", new { id = item.id_consulta })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!--agregando los botones, a traves del HTML ActionLink-->
+<div>
+    @for (int i = 0; i < (int)ViewBag.botones; i++)
+    {
+        @Html.ActionLink((i + 1).ToString(), "Index",
+       new { pagina = i }, new { @class = "btn btn-primary" })
+    }
+</div>

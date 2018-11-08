@@ -26,7 +26,6 @@ namespace ProyConsultaMedica.Models
         [Required(ErrorMessage = "Requerido")]
         public string sexo { get; set; }
 
-
         [DisplayName("Fecha de Nacimiento")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

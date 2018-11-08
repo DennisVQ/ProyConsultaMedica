@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Consulta.cs" />
     <Compile Include="Models\Especialidad.cs" />
     <Compile Include="Models\Medico.cs" />
     <Compile Include="Models\Pais.cs" />
@@ -900,7 +901,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPrincipal.cshtml" />
     <Content Include="Views\Shared\_LayoutMedico.cshtml" />
-    <Content Include="Views\Medico\Index.cshtml" />
     <Content Include="Scripts\revolution-slider\fonts\revicons\revicons.eot" />
     <Content Include="Scripts\revolution-slider\fonts\revicons\revicons.ttf" />
     <Content Include="Scripts\revolution-slider\fonts\revicons\revicons.woff" />
@@ -908,6 +908,14 @@
     <Content Include="Views\Medico\Nuevo.cshtml" />
     <Content Include="Views\Medico\Login.cshtml" />
     <Content Include="Views\Medico\Perfil.cshtml" />
+    <Content Include="Views\Medico\DetalleConsulta.cshtml" />
+    <Content Include="Views\Medico\Index.cshtml" />
+    <Content Include="Views\Medico\ResponderConsulta.cshtml" />
+    <Content Include="Views\Home\CrearConsulta.cshtml" />
+    <Content Include="Views\Home\LoginConsulta.cshtml" />
+    <Content Include="Views\Home\VerConsulta.cshtml" />
+    <Content Include="Views\Home\VerCodigoGenerado.cshtml" />
+    <Content Include="Views\Home\ListarConsultas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

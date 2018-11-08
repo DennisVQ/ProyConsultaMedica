@@ -1,0 +1,147 @@
+﻿@model ProyConsultaMedica.Models.Consulta
+
+@{
+    ViewBag.Title = "VerConsulta";
+    Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
+}
+
+<h2>VerConsulta</h2>
+
+@{ var varConsulta = HttpContext.Current.Session["consultaLogueada"] as ProyConsultaMedica.Models.Consulta; }
+
+
+<div>
+    <h4>Consulta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo_generado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigo_generado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sexo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sexo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.edad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.edad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo_paciente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo_paciente)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.especialidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.especialidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.msje_pregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.msje_pregunta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaPregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaPregunta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.msje_respuesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.msje_respuesta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaRespuesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaRespuesta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.medico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.medico) <br />
+            @* Se genero el var arriba *@
+            @Html.ActionLink("Mi Perfil", "Perfil", "Medico", new { id = varConsulta.medico }, null)
+
+        </dd>
+
+    </dl>
+</div>
+
+
+@if(varConsulta.estado == 1){
+
+    using (Html.BeginForm("CalificarConsulta", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Calificar Respuesta</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.calificacion, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.calificacion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<p>
+    @Html.ActionLink("Salir", "Index")
+</p>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

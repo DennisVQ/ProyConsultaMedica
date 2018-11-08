@@ -1,0 +1,104 @@
+﻿@model ProyConsultaMedica.Models.Consulta
+
+@{
+    ViewBag.Title = "DetalleConsulta";
+    Layout = "~/Views/Shared/_LayoutMedico.cshtml";
+}
+
+<h2>DetalleConsulta</h2>
+
+<div>
+    <h4>Consulta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.correo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.correo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sexo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sexo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.edad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.edad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo_paciente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo_paciente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.msje_pregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.msje_pregunta)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaPregunta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaPregunta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.msje_respuesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.msje_respuesta)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaRespuesta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaRespuesta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.calificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.calificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.especialidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.especialidad)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
