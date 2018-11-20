@@ -213,7 +213,7 @@ namespace ProyConsultaMedica.Controllers
                 SqlCommand cmd = new SqlCommand("SP_InsertarConsulta", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@codigo_generado", "Auto"); // Falta AutoGenerar Codigo
+                cmd.Parameters.AddWithValue("@codigo_generado", "abc123"); // Falta AutoGenerar Codigo
                 cmd.Parameters.AddWithValue("@correo", consulta.correo);
                 cmd.Parameters.AddWithValue("@sexo", consulta.sexo);
                 cmd.Parameters.AddWithValue("@edad", consulta.edad);
@@ -236,8 +236,7 @@ namespace ProyConsultaMedica.Controllers
 
             if (ViewBag.mensaje == "Consulta Registrada")
             {
-                
-                return RedirectToAction("VerCodigoGenerado", "Auto"); // Falta Mandar Codigo Autogenerado
+                return RedirectToAction("VerCodigoGenerado", "Home", new { codigoGenerado = "Aqui ira codigo autogenerado" }); // Falta Mandar Codigo Autogenerado
             }
 
             ViewBag.especialidades = new SelectList(
@@ -250,6 +249,9 @@ namespace ProyConsultaMedica.Controllers
         [AllowAnonymous]
         public ActionResult VerCodigoGenerado(string codigoGenerado)
         {
+
+            Debug.WriteLine(" INGRESO");
+
             if (codigoGenerado == null) {
                 return RedirectToAction("CrearConsulta");
             }

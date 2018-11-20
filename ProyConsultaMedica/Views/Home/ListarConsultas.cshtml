@@ -57,7 +57,7 @@
             @Html.DisplayFor(modelItem => item.tipo_paciente)
         </td>
         <td>
-            @foreach (var esp in (List<ProyConsultaMedica.Models.Especialidad>)ViewBag.especialidad)
+            @foreach (var esp in (List<ProyConsultaMedica.Models.Especialidad>) ViewBag.especialidades)
             {
                 if (esp.id_especialidad == Convert.ToInt32(item.especialidad))
                 {
