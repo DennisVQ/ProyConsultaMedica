@@ -5,32 +5,85 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>Acceso a  su Consulta</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Ingrese el codigo generado que se le entrego al momento de realizar su consulta</h4>
-        <hr />
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.codigo_generado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.codigo_generado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.codigo_generado, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+    <!-- Section: inner-header -->
+<section class="inner-header divider parallax layer-overlay overlay-white-8" data-bg-img="../images/bg/bg30.jpg">
+    <div class="container pt-60 pb-60">
+        <!-- Section Content -->
+        <div class="section-content">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="title">Revisar Mi Consulta</h2>
+                    <ol class="breadcrumb text-center text-black mt-10">
+                        <li><a href="#">Inicio</a></li>
+                        <li class="active text-theme-colored">Revisar Consulta</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
-}
+</section>
 
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>Ingrese Su Codigo Aqui:</h3>
+                <h5>Cuando registro su consulta medica se le genero, mostro y envio via email un codigo privado</h5>
+                
+                <!--<form id="mailchimp-subscription-form1" class="newsletter-form mt-40">-->
+
+                @using (Html.BeginForm("LoginConsulta", "Home", FormMethod.Post, new { @class = "newsletter-form mt-40" }))
+                {
+                <label for="mce-EMAIL"></label>
+                            <div class="input-group">
+                                <!--<input type="email" id="mce-EMAIL" data-height="45px" class="form-control input-lg" placeholder="Your Email" name="EMAIL" value="">-->
+                                @Html.ValidationMessageFor(model => model.codigo_generado, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.codigo_generado, new { htmlAttributes = new { @class = "form-control input-lg", placeholder = "Su Codigo de Consulta" } })
+
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-colored btn-dark btn-lg m-0" data-height="45px">Validar</button>
+                                </span>
+                            </div>
+                    
+                }
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@*
+    <h2>Acceso a  su Consulta</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <div class="form-horizontal">
+            <h4>Ingrese el codigo generado que se le entrego al momento de realizar su consulta</h4>
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.codigo_generado, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.codigo_generado, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.codigo_generado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+*@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

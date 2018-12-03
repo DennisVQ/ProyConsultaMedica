@@ -5,100 +5,188 @@
     Layout = "~/Views/Shared/_LayoutMedico.cshtml";
 }
 
-<h2>DetalleConsulta</h2>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="job-overview">
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-random text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.sexo):</h5>
+                            <p>@Html.DisplayFor(model => model.sexo)</p>
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-user-plus text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.edad):</h5>
+                            <p>@Html.DisplayFor(model => model.edad)</p>
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-users text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.tipo_paciente):</h5>
+                            <p>@Html.DisplayFor(model => model.tipo_paciente)</p>
+                        </dd>
+                    </dl>
 
-<div>
-    <h4>Consulta</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.correo)
-        </dt>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-plus-square text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.especialidad):</h5>
+                            <p>@Html.DisplayFor(model => model.especialidad)</p>
+                        </dd>
+                    </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.correo)
-        </dd>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-calendar text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.fechaPregunta):</h5>
+                            <p>@Html.DisplayFor(model => model.fechaPregunta)</p>
+                        </dd>
+                    </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.sexo)
-        </dt>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="icon-box mb-0 p-0">
+                    <a href="#" class="icon icon-gray pull-left mb-0 mr-10">
+                        <i class="pe-7s-note2"></i>
+                    </a>
+                    <h3 class="icon-box-title pt-15 mt-0 mb-40">Responder Consulta Medica</h3>
+                    <h5 class="mt-30">@Html.DisplayNameFor(model => model.msje_pregunta):</h5>
+                    <p class="text-gray">@Html.DisplayFor(model => model.msje_pregunta)</p>
+                    <hr>
+                    <h5 class="mt-30">@Html.DisplayNameFor(model => model.msje_respuesta):</h5>
+                    <p class="text-gray">@Html.DisplayFor(model => model.msje_respuesta)</p>
+                    <hr>
 
-        <dd>
-            @Html.DisplayFor(model => model.sexo)
-        </dd>
+                    @{
+                        var varCalificacion = "";
+                        switch (Model.calificacion)
+                        {
+                            case 1: varCalificacion = "Muy Mala"; break;
+                            case 2: varCalificacion = "Mala"; break;
+                            case 3: varCalificacion = "Regular"; break;
+                            case 4: varCalificacion = "Buena"; break;
+                            case 5: varCalificacion = "Muy Buena"; break;
+                            default: varCalificacion = ""; break;
 
-        <dt>
-            @Html.DisplayNameFor(model => model.edad)
-        </dt>
+                        }
+                    }
+                    
 
-        <dd>
-            @Html.DisplayFor(model => model.edad)
-        </dd>
+                    <h5 class="mt-30">@Html.DisplayNameFor(model => model.calificacion):</h5>
+                    <p class="text-gray">@varCalificacion</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.tipo_paciente)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.tipo_paciente)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.msje_pregunta)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.msje_pregunta)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaPregunta)
-        </dt>
+@*
+    <h2>DetalleConsulta</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.fechaPregunta)
-        </dd>
+    <div>
+        <h4>Consulta</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.correo)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.msje_respuesta)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.correo)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.msje_respuesta)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaRespuesta)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.sexo)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.fechaRespuesta)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.sexo)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.calificacion)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.edad)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.calificacion)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.edad)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.estado)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo_paciente)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.estado)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.tipo_paciente)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.especialidad)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.msje_pregunta)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.especialidad)
-        </dd>
-    </dl>
-</div>
+            <dd>
+                @Html.DisplayFor(model => model.msje_pregunta)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaPregunta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fechaPregunta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.msje_respuesta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.msje_respuesta)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaRespuesta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fechaRespuesta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.calificacion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.calificacion)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.estado)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.estado)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.especialidad)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.especialidad)
+            </dd>
+        </dl>
+    </div>
+*@
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+   @* @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+    @Html.ActionLink("Volver", "Index")
 </p>

@@ -136,9 +136,10 @@
                                 <img src="~/images/logo-wide.png" alt="">
                             </a>
                             <div id="side-panel-trigger" class="side-panel-trigger"><a href="#"><i class="fa fa-bars font-24 text-gray"></i></a></div>
-                            <ul class="menuzord-menu onepage-nav">
-                                <li><a href="#">Login</a></li>
-                                <li><a href="#">Responder Consultas</a></li>
+                            <ul class="menuzord-menu">
+                                <li>
+                                    @Html.ActionLink("Responder Consultas", "Index", "Medico")
+                                </li>
                             </ul>
                         </nav>
                     </div>

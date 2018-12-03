@@ -7,6 +7,10 @@ using System.Data;
 using System.Data.SqlClient;
 using ProyConsultaMedica.Models;
 using System.Diagnostics;
+using System.Configuration;
+using System.Net.Mail;
+using System.Net;
+//using System.Text;
 
 
 namespace ProyConsultaMedica.Controllers
@@ -208,12 +212,15 @@ namespace ProyConsultaMedica.Controllers
             ViewBag.mensaje = "";
             cn.Open();
 
+            String codigoGenerado = GenerarCodigoConsulta();
+
             try
             {
                 SqlCommand cmd = new SqlCommand("SP_InsertarConsulta", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@codigo_generado", "abc123"); // Falta AutoGenerar Codigo
+
+                cmd.Parameters.AddWithValue("@codigo_generado", codigoGenerado); // Falta AutoGenerar Codigo
                 cmd.Parameters.AddWithValue("@correo", consulta.correo);
                 cmd.Parameters.AddWithValue("@sexo", consulta.sexo);
                 cmd.Parameters.AddWithValue("@edad", consulta.edad);
@@ -236,7 +243,21 @@ namespace ProyConsultaMedica.Controllers
 
             if (ViewBag.mensaje == "Consulta Registrada")
             {
-                return RedirectToAction("VerCodigoGenerado", "Home", new { codigoGenerado = "Aqui ira codigo autogenerado" }); // Falta Mandar Codigo Autogenerado
+                //Envio de Email
+                string Email = ConfigurationManager.AppSettings["Email"].ToString();
+                string Emailto = consulta.correo;
+                MailMessage mail = new MailMessage(Email, Emailto);
+                mail.Subject = "MediConsultas - Codigo de su Consulta";
+                string mailmessage = "Estimado Usuario :" + "<br>" + "El codigo que se le ha generado a su Consulta es el Siguiente "  + codigoGenerado;
+                mail.Body = mailmessage;
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Send(mail);
+                 
+                //Aqui termina envio de email
+
+                //Muestra de Codigo
+                return RedirectToAction("VerCodigoGenerado", "Home", new { codigoGenerado = codigoGenerado }); // Falta Mandar Codigo Autogenerado
             }
 
             ViewBag.especialidades = new SelectList(
@@ -245,6 +266,25 @@ namespace ProyConsultaMedica.Controllers
             return View(consulta);
 
         }
+
+        string GenerarCodigoConsulta()
+        {
+            Random rdn = new Random();
+            string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            int longitud = caracteres.Length;
+            char letra;
+            int longitudContrasenia = 10;
+            string contraseniaAleatoria = string.Empty;
+            for (int i = 0; i < longitudContrasenia; i++)
+            {
+                letra = caracteres[rdn.Next(longitud)];
+                contraseniaAleatoria += letra.ToString();
+            }
+
+            return contraseniaAleatoria;
+        }
+
+
 
         [AllowAnonymous]
         public ActionResult VerCodigoGenerado(string codigoGenerado)

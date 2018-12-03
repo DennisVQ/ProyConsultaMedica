@@ -5,72 +5,207 @@
     Layout = "~/Views/Shared/_LayoutMedico.cshtml";
 }
 
-<h2>Su Listado de Consultas</h2>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-40">
+                <h2 class="title">Sus Consultas Asignadas</h2>
+                <p>Listado de todas las consultas asignadas de ud. Dr.</p>
+                <div data-example-id="hoverable-table" class="bs-example">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                @*
+                                <th>
+                                 @Html.DisplayNameFor(model => model.estado)
+                                </th>
+                                *@
+                                <th>
+                                    @Html.DisplayNameFor(model => model.msje_pregunta)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaPregunta)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.msje_respuesta)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaRespuesta)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.calificacion)
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.estado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.msje_pregunta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaPregunta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.msje_respuesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaRespuesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.calificacion)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.msje_pregunta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fechaPregunta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.msje_respuesta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fechaRespuesta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.calificacion)
-            </td>
-            <td>
-                @Html.ActionLink("Detalle", "DetalleConsulta", new { id = item.id_consulta }) |
+                        </thead>
 
-                @* Valida que consulta falta responderse*@
-                @if (item.estado == 1)
-                {
-                    @Html.ActionLink("Responder", "ResponderConsulta", new { id = item.id_consulta })
-                }
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var varEstado = "";
 
-            </td>
-        </tr>
-    }
+                                if (item.estado == 2)
+                                {
+                                    varEstado = "success";
+                                }
+                                if (item.estado == 1)
+                                {
+                                    varEstado = "danger";
+                                }
 
-</table>
+                                <tr class="@varEstado">
+                                    @*
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.estado)
+                                    </td>
+                                    *@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.msje_pregunta)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaPregunta)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.msje_respuesta)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaRespuesta)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var varCalificacion = "";
+                                            switch (item.calificacion)
+                                            {
+                                                case 1: varCalificacion = "Muy Mala"; break;
+                                                case 2: varCalificacion = "Mala"; break;
+                                                case 3: varCalificacion = "Regular"; break;
+                                                case 4: varCalificacion = "Buena"; break;
+                                                case 5: varCalificacion = "Muy Buena"; break;
+                                                default: varCalificacion = ""; break;
 
-<!--agregando los botones, a traves del HTML ActionLink-->
-<div>
-    @for (int i = 0; i < (int)ViewBag.botones; i++)
-    {
-        @Html.ActionLink((i + 1).ToString(), "Index",
+                                            }
+                                        }
+                                        @varCalificacion 
+                                        @*@Html.DisplayFor(modelItem => item.calificacion)*@
+                                    </td>
+                                    <td>
+                                        <p data-placement="top" data-toggle="tooltip" title="Ver">
+                                            <button class="btn btn-info btn-xs" data-title="Ver" onclick="location.href='@Url.Action("DetalleConsulta", "Medico", new { id = item.id_consulta })'">
+                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                            </button>
+                                        </p>
+                                        @*
+                                        <a href="@Url.Action("DetalleConsulta", "Medico")" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                            <span><strong></strong></span>
+                                        </a>
+                                        *@
+                                        @*@Html.ActionLink("Detalle", "DetalleConsulta", new { id = item.id_consulta }) |*@
+                                    </td>
+                                    <td>
+                                        @* Valida que consulta falta responderse*@
+                                        @if (item.estado == 1)
+                                        {
+                                            <p data-placement="top" data-toggle="tooltip" title="Responder">
+                                                <button class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("ResponderConsulta", "Medico", new { id = item.id_consulta })'">
+                                                    <span class="glyphicon glyphicon-pencil"> </span>
+                                                </button>
+                                            </p>
+                                                @*
+                                                    <a href="@Url.Action("ResponderConsulta", "Medico")" class="btn btn-primary">
+                                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                        <span><strong></strong></span>
+                                                    </a>
+                                                *@
+                                                @*
+                                                    @Html.ActionLink("Responder", "ResponderConsulta", new { id = item.id_consulta })
+                                                *@
+                                                }
+
+</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!--agregando los botones, a traves del HTML ActionLink-->
+        <div>
+            @for (int i = 0; i < (int)ViewBag.botones; i++)
+            {
+                @Html.ActionLink((i + 1).ToString(), "Index",
        new { pagina = i }, new { @class = "btn btn-primary" })
-    }
-</div>
+            }
+        </div>
+
+
+    </div>
+</section>
+@*
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.msje_pregunta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaPregunta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.msje_respuesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaRespuesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.calificacion)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.msje_pregunta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaPregunta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.msje_respuesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaRespuesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.calificacion)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalle", "DetalleConsulta", new { id = item.id_consulta }) |
+
+                    <!--Valida que consulta falta responderse-->
+                    @if (item.estado == 1)
+                    {
+                        @Html.ActionLink("Responder", "ResponderConsulta", new { id = item.id_consulta })
+                    }
+
+                </td>
+            </tr>
+        }
+
+    </table>
+*@
+

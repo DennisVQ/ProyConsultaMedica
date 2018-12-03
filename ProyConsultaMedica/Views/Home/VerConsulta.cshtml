@@ -13,142 +13,299 @@
     Layout = "~/Views/Shared/_LayoutPrincipal.cshtml";
 }
 
-<h2>VerConsulta</h2>
 
 @{ var varConsulta = HttpContext.Current.Session["consultaLogueada"] as ProyConsultaMedica.Models.Consulta; }
 
-
-<div>
-    <h4>Consulta</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.codigo_generado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.codigo_generado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.correo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.correo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.sexo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.sexo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.edad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.edad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.tipo_paciente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.tipo_paciente)
-        </dd>
-
-
-        <dt>
-            @Html.DisplayNameFor(model => model.especialidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.especialidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.msje_pregunta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.msje_pregunta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaPregunta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fechaPregunta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.msje_respuesta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.msje_respuesta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaRespuesta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fechaRespuesta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.medico)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.medico) <br />
-            @* Se genero el var arriba *@
-            @Html.ActionLink("Mi Perfil", "PerfilMedico", "Home", new { id = varConsulta.medico }, null)
-
-        </dd>
-
-    </dl>
-</div>
-
-
-@if(varConsulta.estado == 2){
-
-    using (Html.BeginForm("CalificarConsulta", "Home", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Calificar Respuesta</h4>
-            <hr />
-
-            @Html.HiddenFor(model => model.id_consulta)
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.calificacion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.calificacion, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" />
+    <!-- Section: inner-header -->
+<section class="inner-header divider parallax layer-overlay overlay-white-8" data-bg-img="../images/bg/bg31.jpg">
+    <div class="container pt-60 pb-60">
+        <!-- Section Content -->
+        <div class="section-content">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="font-28">
+                        Detalle de Consulta Medica
+                        <ol class="breadcrumb text-center text-black mt-10">
+                            <li><a href="#">Inicio</a></li>
+                            <li><a href="#">Revisar Mi Consulta</a></li>
+                            <li class="active text-theme-colored">Detalle de Consulta</li>
+                        </ol>
+                    </h3>
                 </div>
             </div>
         </div>
-    }
-}
+    </div>
+</section>
 
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="job-overview">
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-envelope text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.correo):</h5>
+                            <p>@Html.DisplayFor(model => model.correo)</p>
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-random text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.sexo):</h5>
+                            <p>@Html.DisplayFor(model => model.sexo)</p>
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-user-plus text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.edad):</h5>
+                            <p>@Html.DisplayFor(model => model.edad)</p>
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-users text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.tipo_paciente):</h5>
+                            <p>@Html.DisplayFor(model => model.tipo_paciente)</p>
+                        </dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-plus-square text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.especialidad):</h5>
+                            <p>@Html.DisplayFor(model => model.especialidad)</p>
+                        </dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-calendar text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.fechaPregunta):</h5>
+                            <p>@Html.DisplayFor(model => model.fechaPregunta)</p>
+                        </dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-calendar text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.fechaRespuesta):</h5>
+                            <p>@Html.DisplayFor(model => model.fechaRespuesta)</p>
+                        </dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-user-md text-theme-colored mt-5 font-15"></i></dt>
+                        <dd>
+                            <h5 class="mt-0">@Html.DisplayNameFor(model => model.medico):</h5>
+                            <p>@Html.ActionLink("Ver Perfil Medico", "PerfilMedico", "Home", new { id = varConsulta.medico }, null)</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="icon-box mb-0 p-0">
+                    <a href="#" class="icon icon-gray pull-left mb-0 mr-10">
+                        <i class="pe-7s-note2"></i>
+                    </a>
+                    <h3 class="icon-box-title pt-15 mt-0 mb-40">Consulta Medica</h3>
+                    <h5 class="mt-30">@Html.DisplayNameFor(model => model.msje_pregunta):</h5>
+                    <p class="text-gray">@Html.DisplayFor(model => model.msje_pregunta)</p>
+                    <hr>
+                    <h5 class="mt-30">@Html.DisplayNameFor(model => model.msje_respuesta):</h5>
+                    <p class="text-gray">@Html.DisplayFor(model => model.msje_respuesta)</p>
+                    <hr>
+
+                    <!--<p class="text-gray">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi id perspiciatis facilis nulla possimus quasi, amet qui. Ea rerum officia, aspernatur nulla.</p>-->
+                </div>
+
+                @if (varConsulta.estado == 2)
+                {
+
+
+                    using (Html.BeginForm("CalificarConsulta", "Home", FormMethod.Post, new { @class = "newsletter-form mt-40" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @*@Html.LabelFor(model => model.calificacion, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <h4 class="mt-30">Calificar Respuesta</h4>
+                            <hr />
+
+                            @Html.HiddenFor(model => model.id_consulta)
+
+                            <div class="input-group">
+                                @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
+                                <!--<input type="email" id="mce-EMAIL" data-height="45px" class="form-control input-lg" placeholder="Your Email" name="EMAIL" value="">--> 
+                                @*@Html.EditorFor(model => model.calificacion, new { htmlAttributes = new { @class = "form-control" } })*@
+                                @Html.DropDownListFor(model => model.calificacion, new List<SelectListItem>
+                                        {
+                                            new SelectListItem{ Text="Escoge", Value = "" },
+                                            new SelectListItem{ Text="Muy Buena", Value = "5" },
+                                            new SelectListItem{ Text="Buena", Value = "4" },
+                                            new SelectListItem{ Text="Regular", Value = "3" },
+                                            new SelectListItem{ Text="Mala", Value = "2" },
+                                            new SelectListItem{ Text="Muy Mala", Value = "1" },
+                                        },
+                                            htmlAttributes: new { @class = "form-control input-lg"  }
+                                        )
+
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-colored btn-dark btn-lg m-0" data-height="45px">Calificar</button>
+                                </span>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@*
+
+    <h2>VerConsulta</h2>
+
+    @{ var varConsulta = HttpContext.Current.Session["consultaLogueada"] as ProyConsultaMedica.Models.Consulta; }
+
+
+    <div>
+        <h4>Consulta</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.codigo_generado)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.codigo_generado)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.correo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.correo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.sexo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.sexo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.edad)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.edad)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo_paciente)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tipo_paciente)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.especialidad)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.especialidad)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.msje_pregunta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.msje_pregunta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaPregunta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fechaPregunta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.msje_respuesta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.msje_respuesta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaRespuesta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fechaRespuesta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.medico)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.medico) <br />
+                <!-- Se genero el var arriba -->
+                @Html.ActionLink("Mi Perfil", "PerfilMedico", "Home", new { id = varConsulta.medico }, null)
+
+            </dd>
+
+        </dl>
+    </div>
+
+
+    @if(varConsulta.estado == 2){
+
+        using (Html.BeginForm("CalificarConsulta", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Calificar Respuesta</h4>
+                <hr />
+
+                @Html.HiddenFor(model => model.id_consulta)
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.calificacion, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.calificacion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+*@
 <p>
     @Html.ActionLink("Salir", "Index")
 </p>

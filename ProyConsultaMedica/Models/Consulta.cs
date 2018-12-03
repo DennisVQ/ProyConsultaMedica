@@ -38,9 +38,10 @@ namespace ProyConsultaMedica.Models
         [Required(ErrorMessage = "Requerido")]
         public string msje_respuesta { get; set; }
 
-
+        [DisplayName("Fecha Pregunta")]
         public DateTime? fechaPregunta { get; set; }
 
+        [DisplayName("Fecha Respuesta")]
         public DateTime? fechaRespuesta { get; set; }
 
         [DisplayName("Calificacion")]
@@ -48,7 +49,7 @@ namespace ProyConsultaMedica.Models
         [Range(0, 6, ErrorMessage = "Ingresa una calificacion valida")]
         public int calificacion { get; set; }
 
-        [DisplayName("Estado de Consulta")]
+        [DisplayName("Estado")]
         public int estado { get; set; }
 
         [DisplayName("Especialidad")]

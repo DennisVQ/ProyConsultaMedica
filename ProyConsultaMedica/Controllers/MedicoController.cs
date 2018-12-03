@@ -178,7 +178,7 @@ namespace ProyConsultaMedica.Controllers
 
             if (medicoBuscado == null)
             {
-                ViewBag.Mensaje = "Usuario y/o contraseña incorrectos";
+                ViewBag.Mensaje = "Usuario y/o password incorrectos";
                 return View(reg);
             }
 
@@ -322,7 +322,7 @@ namespace ProyConsultaMedica.Controllers
             return View(cons);
         }
 
-        public ActionResult ResponderConsulta(int id)
+        public ActionResult ResponderConsulta(int? id)
         {
 
             if (id == null)
